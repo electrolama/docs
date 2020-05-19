@@ -196,6 +196,48 @@ cc2538-bsl.py -p COM14 -e
 _Example of a successful flash of Z-Stack coordinator firmware under Windows:_
 ![zzh flash complete](/_assets/zzh-flash-complete.jpg)
 
+#### macOS
+To run cc2538-bsl.py you need to install some extra python dependancies, python3 should already be shipped with macOS (Catalina).
+
+##### Download and extract cc2538-bsl
+
+``` bash
+wget -O cc2538-bsl.zip https://codeload.github.com/JelmerT/cc2538-bsl/zip/master && unzip cc2538-bsl.zip
+```
+##### Install required dependencies
+
+As we cannot write to the system's location we need to install the dependancies with in the user location.
+The downside is this has to be installed for every user that will use cc2538-dsl.
+
+```bash
+$ /usr/bin/python3 -m pip install --user pyserial intelhex
+```
+
+##### Flash firmware
+
+At this point you are going to need a firmware file to flash to your device. As a test, you can grab [this small program (blink.bin)](/_assets/blink.bin) that toggles the LED connected to `DIO_7`.
+
+To flash `blink.bin`, run:
+
+```bash
+$ ls -l /dev/tty.usbserial-*
+$ ./cc2538-bsl.py -p /dev/tty.usbserial-2212420 -evw blink.bin
+```
+
+**Don't forget to change `/dev/tty.usbserial-2212420` to the port used on your machine!**
+
+This shouldn't take long and if successful, you will see blinkenlights!
+
+If you want to re-flash zzh with new firmware, put it in bootloader mode and follow the flashing instructions. **This will work as long as BSL is not disabled by the firmware you burn to these devices.**
+
+##### Erase flash
+
+To completely erase the device flash, run:
+
+```bash
+$ ./cc2538-bsl.py -p /dev/tty.usbserial-2212420 -e
+```
+
 ### Flashing using external debugger
 
 **Please Note**: For general purpose usage, you will not need an external debugger and BSL method discussed above will be enough for your flashing needs. If you are a firmware developer needing proper debugging facilities and/or want to get access to the RF tools in TI SmartRF Studio, follow along.
