@@ -29,20 +29,20 @@ Please follow the following instructions to put your stick in BSL mode:
 
 We need to identify what serial port to use, right click on the Start menu and go to the "Device Manager". Plug your stick in and look under "Ports (COM & LPT)" for the COM Port it will pick up:
 
-![serial port windows](/_assets/zzh-port-windows.png)
+![Serial Ports in Windows Device Manager](/_assets/zzh-port-windows.png)
 
 If you don't see your stick under "Ports (COM & LPT)" with a COM Port assigned, you may need to install the drivers for it (see [here](/radio-docs/drivers/)).
 
 With the COM Port identified in "Device Manager", switch over to SmartRF Flash Programmer v2 and click on "Unknown" displayed under the serial port you've identified:
 
-![serial port windows](/_assets/flash-prog-port.png)
+![COM Port selection in Flash Programmer 2](/_assets/flash-prog-port.png)
 
 
 ## Select correct device
 
 Next up: We need to tell SmartRF Flash Programmer v2 what target device we have on our stick. For zzh, select "CC2652R" and for zzhp/zzhp-lite, select "CC2652P":
 
-![serial port windows](/_assets/flash-prog-device.png)
+![Flash Programmer 2 Chip Selection](/_assets/flash-prog-device.png)
 
 
 ## Select firmware file and flash device
@@ -53,16 +53,30 @@ With the correct serial port chosen and target device selected, click "Browse" a
 
 With the correct firmware chosen, make sure that "Erase", "Program" and "Verify" are all chosen under "Actions" and press the blue button to start flashing:
 
-![serial port windows](/_assets/flash-prog.png)
+![Flash Programmer 2 GUI](/_assets/flash-prog.png)
 
 If all goes to plan, after a few seconds you should see a green bar confirming that the flashing operating suceeded:
 
-![serial port windows](/_assets/flash-prog-ok.png)
+![Successful flashing using Flash Programmer 2](/_assets/flash-prog-ok.png)
 
 You can now proceed to configuring your software of choice (see [here](/radio-docs/#step-4-setup-zigbee2mqtt-or-zha)).
 
+
+## Troubleshooting
+
+### Error: "No response from device"
+
 If your stick is not in BSL mode or you have not chosen the correct serial port, you will get the following error message:
 
-![serial port windows](/_assets/flash-prog-fail.png)
+![BSL Mode failure](/_assets/flash-prog-fail.png)
 
 Unplug your stick and follow instructions above to try again.
+
+### Error: "Failed to open file"
+
+If your path or filename contains extended characters, Flash Programmer 2 will fail. Simply renaming the file/folder or just moving your firmware file to a simple path (e.g: "C:\firmware.hex") will fix this issue:
+
+![Extended characters in path/filename failure](/_assets/flash-prog-ext-chars.png)
+
+
+
